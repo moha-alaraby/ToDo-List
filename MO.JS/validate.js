@@ -91,13 +91,13 @@ plus[0].onclick = function () {
 document.addEventListener("click", function (e) {
   // حذف مهمة واحدة
   if (e.target.classList.contains("delete")) {
-    let taskText = e.target.parentElement.textContent.replace("delete", "").trim();
+    let taskText = e.target.parentElement.firstChild.textContent.trim();
 
     // إزالة من الواجهة
     e.target.parentElement.remove();
 
     // إزالة من التخزين
-    txts = txts.filter(task => task.text !== taskText);
+    txts = txts.filter(task => task.text.trim() !== taskText);
     localStorage.setItem("txts", JSON.stringify(txts));
 
     tasks.textContent = taskContent.children.length;
@@ -110,10 +110,10 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("task-box")) {
     e.target.classList.toggle("finished");
 
-    let taskText = e.target.textContent.replace("delete", "").trim();
+    let taskText = e.target.firstChild.textContent.trim();
 
     txts = txts.map(task => {
-      if (task.text === taskText) {
+      if (task.text.trim() === taskText) {
         return { ...task, finished: !task.finished };
       }
       return task;
